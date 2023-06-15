@@ -1,0 +1,113 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #F4F4F4;
+    padding: 1em;
+}
+
+#snippetBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 2em;
+    background-color: #fff;
+    margin-bottom: 2em;
+    width: 100%;
+    min-width: 300px;
+    max-width: 800px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    justify-content: space-between;
+}
+
+#snippetName {
+    text-align: center;
+    width: 100%;
+}
+
+#snippetCode {
+    box-sizing: border-box;
+    margin-bottom: 1em;
+    width: calc(100% - 2em);
+    margin-left: 1em;
+    margin-right: 1em;
+    background-color: #eee;
+    padding: 1em;
+    border-radius: 5px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+h1 {
+    margin-bottom: 1em;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff9800;
+    color: #fff;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ee8f01;
+}
+
+#saveButton {
+    background-color: #01aa5b;
+}
+
+a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ------------- Font change ------------ */
+
+#toolBar {
+    display: flex;
+    justify-content: flex-start;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+#toolBar button {
+    padding: 5px 10px;
+    font-size: 0.9em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #017483;
+    height: 20px; /* Adjust to your preference */
+    width: 20px;  /* Adjust to your preference */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#toolBar button:hover {
+    background-color: #01616e;
+}
+
+/* Copy button */
+
+#copyButton i {
+    font-size: 13px;
+}
+
+#editButton i {
+    font-size: 15px;
+}

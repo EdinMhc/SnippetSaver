@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="Style/popup.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <h1>Save Snippets</h1>
+    <input id="snippetName" type="text" placeholder="Snippet name">
+    <textarea id="snippetContent" placeholder="Snippet content"></textarea>
+    <input id="saveSnippet" type="submit" value="Save snippet">
+    <p id="errorMessage"></p>
+    <input id="loadSnippets" type="submit" value="Load snippets">
+    <div id="parentContainer">
+        <div id="snippetContainer"></div>
+        <button id="deleteAll" style="display: none;" class="delete-button">Delete All</button>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>

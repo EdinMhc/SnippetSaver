@@ -1,0 +1,209 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 15px;
+    width: 300px;
+}
+
+input[type=text], textarea {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    resize: vertical;
+}
+
+input[type=submit] {
+    width: 100%;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+    input[type=submit]:hover {
+        opacity: 0.8;
+    }
+
+#saveSnippet {
+    background-color: #ff9800;
+    color: white;
+}
+
+    #saveSnippet:hover {
+        background-color: #ff5722;
+    }
+
+#loadSnippets {
+    background-color: #2196F3;
+    color: white;
+}
+
+    #loadSnippets:hover {
+        background-color: #0d8bf2;
+    }
+
+    #snippetContainer {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        padding: 0 10px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    #snippetContainer > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #dddddd;
+        height: 30px;
+        margin-bottom: 10px;
+        padding: 0 10px;
+        text-decoration: none;
+        color: #333;
+        width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+        cursor: pointer;
+    }
+    
+    #snippetContainer > div > div {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    #snippetContainer .material-icons {
+        font-size: 18px;
+        flex-shrink: 0;
+    }
+    
+    #snippetContainer > div:hover {
+        background: #ccc;
+    }
+    
+
+#deleteAll {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    bottom: 10px;
+    right: 10px;
+    border-radius: 12px;
+}
+
+    #deleteAll:hover {
+        background-color: darkred;
+        color: white;
+    }
+
+#parentContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+  }  
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+  }
+  
+  
+.input-error {
+    animation: shake 0.5s;
+    animation-iteration-count: 1;
+  }
+
+input.input-error {
+    border-color: red;
+    animation: shake 0.5s;
+    animation-iteration-count: 1;
+}
+
+#errorMessage {
+    color: red;
+    font-weight: bold;
+}
+
+.apply-button.input-error {
+    background-color: red;
+    color: white;
+  }
+  
+
+.copy-button, .delete-button, .edit-button, .apply-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.copy-button:hover, .delete-button:hover, .edit-button:hover, .apply-button {
+    background-color: #bdbbbb;
+}
+
+.edit-button.material-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+.editable {
+    border: 1px solid #ccc;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #bdbbbb;
+}
+
+.editable .snippet-name {
+    width: calc(100% - 120px);
+    overflow: auto;
+} 
+
+.disabled-link {
+    pointer-events: none;
+    cursor: default;
+    color: #000000;
+  }
+  
+  .snippet-name {
+    display: inline-block;
+    padding: 10px 0;
+  }
+  
