@@ -16,6 +16,13 @@ chrome.storage.local.get({ snippets: [] }, function(result) {
     let snippetUrl = document.getElementById('snippetUrl');
     snippetUrl.href = snippet.url;
     snippetUrl.target = "_blank";
+
+    const actualLink = snippet.url;
+
+    snippetUrl.textContent = actualLink;
+
+    const findSnippetElement = document.getElementById('findSnippet');
+    findSnippetElement.style.display = 'block';
   } else {
     document.getElementById('snippetName').textContent = 'Snippet not found';
   }
@@ -38,8 +45,12 @@ document.getElementById('backButton').addEventListener('click', function() {
 });
 
 document.getElementById('editButton').addEventListener('click', function() {
+  // toggleSnippetLinkVisibility(false);
   const snippetCode = document.getElementById('snippetCode');
   snippetCode.contentEditable = "true";
+
+  const snippetUrl = document.getElementById('snippetUrl');
+  snippetUrl.contentEditable = "true";
 
   document.getElementById('saveButton').style.display = "block";
 });
@@ -57,8 +68,12 @@ document.getElementById('copyButton').addEventListener('click', function() {
 });
 
 document.getElementById('saveButton').addEventListener('click', function() {
+  // toggleSnippetLinkVisibility(true);
   const snippetCode = document.getElementById('snippetCode');
   snippetCode.contentEditable = "false";
+
+  const snippetUrl = document.getElementById('snippetUrl');
+  snippetUrl.contentEditable = "false";
 
   const updatedSnippetCode = snippetCode.textContent;
   snippet.code = updatedSnippetCode;
@@ -69,3 +84,8 @@ document.getElementById('saveButton').addEventListener('click', function() {
 
   this.style.display = "none";
 });
+
+function toggleSnippetLinkVisibility(showLink) {
+  const snippetLinkContainer = document.getElementById('findSnippet');
+  snippetLinkContainer.style.display = showLink ? 'block' : 'none';
+}
