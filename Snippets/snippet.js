@@ -45,7 +45,6 @@ document.getElementById('backButton').addEventListener('click', function() {
 });
 
 document.getElementById('editButton').addEventListener('click', function() {
-  // toggleSnippetLinkVisibility(false);
   const snippetCode = document.getElementById('snippetCode');
   snippetCode.contentEditable = "true";
 
@@ -68,7 +67,6 @@ document.getElementById('copyButton').addEventListener('click', function() {
 });
 
 document.getElementById('saveButton').addEventListener('click', function() {
-  // toggleSnippetLinkVisibility(true);
   const snippetCode = document.getElementById('snippetCode');
   snippetCode.contentEditable = "false";
 
@@ -76,16 +74,30 @@ document.getElementById('saveButton').addEventListener('click', function() {
   snippetUrl.contentEditable = "false";
 
   const updatedSnippetCode = snippetCode.textContent;
-  snippet.code = updatedSnippetCode;
+  const updatedSnippetUrl = snippetUrl.innerHTML;
 
-  chrome.storage.local.set({ snippets: snippets }, function() {
+  const index = snippets.findIndex(s => s.name === snippet.name);
+  if (index !== -1) {
+    snippets[index].code = updatedSnippetCode;
+    snippets[index].url = updatedSnippetUrl;
+  }
+
+  saveSnippets(snippets).then(() => {
     console.log('Snippet saved');
+  }).catch(err => {
+    console.error('Error saving snippet: ', err);
   });
 
   this.style.display = "none";
 });
 
-function toggleSnippetLinkVisibility(showLink) {
-  const snippetLinkContainer = document.getElementById('findSnippet');
-  snippetLinkContainer.style.display = showLink ? 'block' : 'none';
+async function saveSnippets(snippets) {
+  return new Promise((resolve, reject) => {
+    chrome.storage.local.set({ snippets }, () => {
+      if (chrome.runtime.lastError) {
+        return reject(chrome.runtime.lastError);
+      }
+      resolve();
+    });
+  });
 }
