@@ -46,9 +46,14 @@ document.getElementById('backButton').addEventListener('click', function() {
 
 document.getElementById('newAddUrlButton').addEventListener('click', function() {
   const snippetUrl = document.getElementById('snippetUrl');
-  snippetUrl.href = prompt("Please enter the URL:");
-  snippetUrl.textContent = snippetUrl.href;
-  this.style.display = "none";
+  const newUrl = prompt("Please enter the URL:");
+
+  // Check if the user clicked "Cancel" or entered an empty URL
+  if (newUrl !== null && newUrl.trim() !== "") {
+      snippetUrl.href = newUrl;
+      snippetUrl.textContent = newUrl;
+      this.style.display = "none";  // Hide the button after adding the URL
+  }
 });
 
 document.getElementById('editButton').addEventListener('click', function() {
