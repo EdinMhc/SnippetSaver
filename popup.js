@@ -147,7 +147,6 @@ function copySnippet(text) {
         });
 }
 
-
 async function deleteSnippet(snippetName) {
     snippets = snippets.filter(snippet => snippet.name !== snippetName);
     await saveSnippets(snippets);

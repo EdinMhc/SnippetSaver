@@ -29,16 +29,26 @@ chrome.storage.local.get({ snippets: [] }, function(result) {
 });
 
 document.getElementById('smallFont').addEventListener('click', function() {
-  document.getElementById('snippetCode').style.fontSize = '12px';
+  const snippetCode = document.getElementById('snippetCode');
+  snippetCode.style.fontSize = '12px';
+  snippetCode.style.width = '350px';  // Adjust the width of the snippetCode
+  document.body.style.width = '420px'; 
 });
 
 document.getElementById('mediumFont').addEventListener('click', function() {
-  document.getElementById('snippetCode').style.fontSize = '18px';
+  const snippetCode = document.getElementById('snippetCode');
+  snippetCode.style.fontSize = '18px';
+  snippetCode.style.width = '515px';  // Adjust the width of the snippetCode
+  document.body.style.width = '610px'; 
 });
 
 document.getElementById('largeFont').addEventListener('click', function() {
-  document.getElementById('snippetCode').style.fontSize = '24px';
+  const snippetCode = document.getElementById('snippetCode');
+  snippetCode.style.fontSize = '24px';
+  snippetCode.style.width = '690px';  // Adjust the width of the snippetCode
+  document.body.style.width = '770px'; 
 });
+
 
 document.getElementById('backButton').addEventListener('click', function() {
   window.history.back();
