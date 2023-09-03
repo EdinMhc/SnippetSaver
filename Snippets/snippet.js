@@ -11,7 +11,7 @@ chrome.storage.local.get({ snippets: [] }, function(result) {
 
   if (snippet) {
     document.getElementById('snippetName').textContent = snippet.name;
-    document.getElementById('snippetCode').innerText = snippet.code;
+    document.getElementById('snippetCode').innerHTML = convertUrlsToAnchors(snippet.code);;
     
     let snippetUrl = document.getElementById('snippetUrl');
     snippetUrl.href = snippet.url;
@@ -89,10 +89,10 @@ document.getElementById('saveButton').addEventListener('click', function() {
   const snippetCode = document.getElementById('snippetCode');
   snippetCode.contentEditable = "false";
 
+  let updatedSnippetCode = snippetCode.innerText;
+
   const snippetUrl = document.getElementById('snippetUrl');
   snippetUrl.contentEditable = "false";
-
-  const updatedSnippetCode = snippetCode.innerText;
   const updatedSnippetUrl = snippetUrl.innerHTML;
 
   const index = snippets.findIndex(s => s.name === snippet.name);
@@ -119,5 +119,12 @@ async function saveSnippets(snippets) {
       }
       resolve();
     });
+  });
+}
+
+function convertUrlsToAnchors(text) {
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  return text.replace(urlRegex, function(url) {
+    return `<a href="${url}" target="_blank">${url}</a>`;
   });
 }
