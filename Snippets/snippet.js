@@ -11,7 +11,7 @@ chrome.storage.local.get({ snippets: [] }, function(result) {
 
   if (snippet) {
     document.getElementById('snippetName').textContent = snippet.name;
-    document.getElementById('snippetCode').textContent = snippet.code;
+    document.getElementById('snippetCode').innerText = snippet.code;
     
     let snippetUrl = document.getElementById('snippetUrl');
     snippetUrl.href = snippet.url;
@@ -85,7 +85,7 @@ document.getElementById('saveButton').addEventListener('click', function() {
   const snippetUrl = document.getElementById('snippetUrl');
   snippetUrl.contentEditable = "false";
 
-  const updatedSnippetCode = snippetCode.textContent;
+  const updatedSnippetCode = snippetCode.innerText;
   const updatedSnippetUrl = snippetUrl.innerHTML;
 
   const index = snippets.findIndex(s => s.name === snippet.name);
