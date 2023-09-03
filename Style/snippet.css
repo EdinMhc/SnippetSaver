@@ -107,14 +107,17 @@ a:hover {
     font-size: 15px;
 }
 
-#addUrlButton {
+#newAddUrlButton {
     background-color: #3f51b5;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
 }
 
-#addUrlButton:hover {
-    background-color: #303f9f;
-}
-
-#addUrlButton i {
+#newAddUrlButton i {
     font-size: 15px;
 }
+

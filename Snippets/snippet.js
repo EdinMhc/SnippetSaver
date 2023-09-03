@@ -44,7 +44,7 @@ document.getElementById('backButton').addEventListener('click', function() {
   window.history.back();
 });
 
-document.getElementById('addUrlButton').addEventListener('click', function() {
+document.getElementById('newAddUrlButton').addEventListener('click', function() {
   const snippetUrl = document.getElementById('snippetUrl');
   snippetUrl.href = prompt("Please enter the URL:");
   snippetUrl.textContent = snippetUrl.href;
@@ -58,9 +58,11 @@ document.getElementById('editButton').addEventListener('click', function() {
   const snippetUrl = document.getElementById('snippetUrl');
   snippetUrl.contentEditable = "true";
   
-  if (!snippet.url || snippet.url.trim() === "") {
-    document.getElementById('addUrlButton').style.display = "block";
-  }
+  if (snippetUrl.href.includes('null') || snippetUrl.href.trim() === "" || snippetUrl.textContent.includes('null') || snippetUrl.textContent.trim() === "") {
+    document.getElementById('newAddUrlButton').style.visibility = "visible";  // Show the button
+} else {
+    document.getElementById('newAddUrlButton').style.visibility = "hidden";  // Hide the button
+}
 
   document.getElementById('saveButton').style.display = "block";
 });
@@ -101,7 +103,7 @@ document.getElementById('saveButton').addEventListener('click', function() {
   });
 
   this.style.display = "none";
-  document.getElementById('addUrlButton').style.display = "none";
+  document.getElementById('newAddUrlButton').style.visibility = "hidden";
 });
 
 async function saveSnippets(snippets) {
