@@ -9,24 +9,26 @@ chrome.storage.local.get({ snippets: [] }, function(result) {
 
   snippet = snippets.find(snippet => snippet.name === snippetName);
 
-  if (snippet) {
-    document.getElementById('snippetName').textContent = snippet.name;
-    document.getElementById('snippetCode').innerHTML = convertUrlsToAnchors(snippet.code);
-    
-    let snippetUrl = document.getElementById('snippetUrl');
-    snippetUrl.href = snippet.url;
-    snippetUrl.target = "_blank";
-
-    const actualLink = snippet.url;
-
-    snippetUrl.textContent = actualLink;
-
-    const findSnippetElement = document.getElementById('findSnippet');
-    findSnippetElement.style.display = 'block';
-  } else {
+  if (!snippet) {
     document.getElementById('snippetName').textContent = 'Snippet not found';
+    return;
   }
+
+  loadSnippet(snippet);
 });
+
+function loadSnippet(snippet) {
+  let snippetUrl = document.getElementById('snippetUrl');
+  let tempUrl = snippet.url;
+
+  let detachedSnippetUrl = detachElement(snippetUrl);
+
+  setSnippetName(snippet.name);
+  setSnippetCode(snippet.code);
+
+  appendToFindSnippet(detachedSnippetUrl);
+  configureSnippetUrl(snippetUrl, tempUrl);
+}
 
 document.getElementById('smallFont').addEventListener('click', function() {
   const snippetCode = document.getElementById('snippetCode');
@@ -48,7 +50,6 @@ document.getElementById('largeFont').addEventListener('click', function() {
   snippetCode.style.width = '690px';  // Adjust the width of the snippetCode
   document.body.style.width = '770px'; 
 });
-
 
 document.getElementById('backButton').addEventListener('click', function() {
   window.history.back();
@@ -83,7 +84,6 @@ document.getElementById('editButton').addEventListener('click', function() {
   document.getElementById('boldButton').style.visibility = "visible";
 });
 
-
 document.getElementById('copyButton').addEventListener('click', function() {
   const snippetText = document.getElementById('snippetCode').textContent;
 
@@ -101,10 +101,15 @@ document.getElementById('saveButton').addEventListener('click', function() {
   snippetCode.contentEditable = "false";
 
   let updatedSnippetCode = convertAnchorsToUrls(snippetCode.innerHTML);
+  updatedSnippetCode = updatedSnippetCode.replace('data-unique="bottom-url"', '');
+
+  const currentUrl = document.getElementById('snippetUrl').href;
+  snippet.url = currentUrl;
 
   const snippetUrl = document.getElementById('snippetUrl');
   snippetUrl.contentEditable = "false";
-  const updatedSnippetUrl = snippetUrl.innerHTML;
+
+  const updatedSnippetUrl = snippetUrl.href;
 
   const index = snippets.findIndex(s => s.name === snippet.name);
   if (index !== -1) {
@@ -122,27 +127,6 @@ document.getElementById('saveButton').addEventListener('click', function() {
   document.getElementById('newAddUrlButton').style.visibility = "hidden";
   document.getElementById('boldButton').style.visibility = "hidden";
 });
-
-// document.getElementById('boldButton').addEventListener('click', function() {
-//   const selection = window.getSelection();
-//   const range = selection.getRangeAt(0);
-//   const selectedText = range.toString();
-
-//   // Check if the selected text is inside an anchor tag
-//   const parentElement = range.commonAncestorContainer.parentElement;
-//   if (parentElement && parentElement.tagName === 'A') {
-//       // If inside an anchor tag, do nothing and return
-//       return;
-//   }
-
-//   const boldElement = document.createElement('b');
-//   boldElement.textContent = selectedText;
-
-//   range.deleteContents();
-//   range.insertNode(boldElement);
-
-//   selection.removeAllRanges();
-// });
 
 document.getElementById('boldButton').addEventListener('click', function() {
   const selection = window.getSelection();
@@ -164,6 +148,7 @@ document.getElementById('boldButton').addEventListener('click', function() {
   selection.removeAllRanges();
 });
 
+// Helper functions
 async function saveSnippets(snippets) {
   return new Promise((resolve, reject) => {
     chrome.storage.local.set({ snippets }, () => {
@@ -185,4 +170,29 @@ function convertUrlsToAnchors(text) {
 function convertAnchorsToUrls(text) {
   const anchorRegex = /<a href="(https?:\/\/[^"]+)" target="_blank">\1<\/a>/g;
   return text.replace(anchorRegex, '$1');
+}
+
+function setSnippetName(name) {
+  document.getElementById('snippetName').textContent = name;
+}
+
+function setSnippetCode(code) {
+  document.getElementById('snippetCode').innerHTML = convertUrlsToAnchors(code);
+}
+
+function configureSnippetUrl(snippetUrl, url) {
+  snippetUrl.href = url;
+  snippetUrl.target = "_blank";
+  snippetUrl.textContent = url;
+  snippetUrl.setAttribute('data-unique', 'bottom-url');
+}
+
+function detachElement(element) {
+  return element.parentNode.removeChild(element);
+}
+
+function appendToFindSnippet(element) {
+  const findSnippetElement = document.getElementById('findSnippet');
+  findSnippetElement.appendChild(element);
+  findSnippetElement.style.display = 'block';
 }
