@@ -11,7 +11,7 @@ chrome.storage.local.get({ snippets: [] }, function(result) {
 
   if (snippet) {
     document.getElementById('snippetName').textContent = snippet.name;
-    document.getElementById('snippetCode').innerHTML = convertUrlsToAnchors(snippet.code);;
+    document.getElementById('snippetCode').innerHTML = convertUrlsToAnchors(snippet.code);
     
     let snippetUrl = document.getElementById('snippetUrl');
     snippetUrl.href = snippet.url;
@@ -80,6 +80,7 @@ document.getElementById('editButton').addEventListener('click', function() {
 }
 
   document.getElementById('saveButton').style.display = "block";
+  document.getElementById('boldButton').style.visibility = "visible";
 });
 
 
@@ -99,7 +100,7 @@ document.getElementById('saveButton').addEventListener('click', function() {
   const snippetCode = document.getElementById('snippetCode');
   snippetCode.contentEditable = "false";
 
-  let updatedSnippetCode = snippetCode.innerText;
+  let updatedSnippetCode = convertAnchorsToUrls(snippetCode.innerHTML);
 
   const snippetUrl = document.getElementById('snippetUrl');
   snippetUrl.contentEditable = "false";
@@ -119,6 +120,48 @@ document.getElementById('saveButton').addEventListener('click', function() {
 
   this.style.display = "none";
   document.getElementById('newAddUrlButton').style.visibility = "hidden";
+  document.getElementById('boldButton').style.visibility = "hidden";
+});
+
+// document.getElementById('boldButton').addEventListener('click', function() {
+//   const selection = window.getSelection();
+//   const range = selection.getRangeAt(0);
+//   const selectedText = range.toString();
+
+//   // Check if the selected text is inside an anchor tag
+//   const parentElement = range.commonAncestorContainer.parentElement;
+//   if (parentElement && parentElement.tagName === 'A') {
+//       // If inside an anchor tag, do nothing and return
+//       return;
+//   }
+
+//   const boldElement = document.createElement('b');
+//   boldElement.textContent = selectedText;
+
+//   range.deleteContents();
+//   range.insertNode(boldElement);
+
+//   selection.removeAllRanges();
+// });
+
+document.getElementById('boldButton').addEventListener('click', function() {
+  const selection = window.getSelection();
+  const range = selection.getRangeAt(0);
+  const parentElement = range.commonAncestorContainer.parentElement;
+
+  if (parentElement && parentElement.tagName === 'B') {
+      // If the selected text is bolded, unbold it
+      const unboldedText = document.createTextNode(parentElement.textContent);
+      parentElement.replaceWith(unboldedText);
+  } else {
+      // If the selected text is not bolded, bold it
+      const boldElement = document.createElement('b');
+      boldElement.textContent = range.toString();
+      range.deleteContents();
+      range.insertNode(boldElement);
+  }
+
+  selection.removeAllRanges();
 });
 
 async function saveSnippets(snippets) {
@@ -133,8 +176,13 @@ async function saveSnippets(snippets) {
 }
 
 function convertUrlsToAnchors(text) {
-  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const urlRegex = /(?<!href="|">)(https?:\/\/[^\s<]+)/g;
   return text.replace(urlRegex, function(url) {
-    return `<a href="${url}" target="_blank">${url}</a>`;
+      return `<a href="${url}" target="_blank">${url}</a>`;
   });
+}
+
+function convertAnchorsToUrls(text) {
+  const anchorRegex = /<a href="(https?:\/\/[^"]+)" target="_blank">\1<\/a>/g;
+  return text.replace(anchorRegex, '$1');
 }
