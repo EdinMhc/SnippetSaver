@@ -103,18 +103,18 @@ document.getElementById('saveButton').addEventListener('click', function() {
   let updatedSnippetCode = convertAnchorsToUrls(snippetCode.innerHTML);
   updatedSnippetCode = updatedSnippetCode.replace('data-unique="bottom-url"', '');
 
-  const currentUrl = document.getElementById('snippetUrl').href;
+  const snippetUrlElement = document.getElementById('snippetUrl');
+  let currentUrl = snippetUrlElement.textContent.trim() !== "" ? snippetUrlElement.href : "";
+
   snippet.url = currentUrl;
 
   const snippetUrl = document.getElementById('snippetUrl');
   snippetUrl.contentEditable = "false";
 
-  const updatedSnippetUrl = snippetUrl.href;
-
   const index = snippets.findIndex(s => s.name === snippet.name);
   if (index !== -1) {
     snippets[index].code = updatedSnippetCode;
-    snippets[index].url = updatedSnippetUrl;
+    snippets[index].url = currentUrl;
   }
 
   saveSnippets(snippets).then(() => {
