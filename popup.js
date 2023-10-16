@@ -116,7 +116,7 @@ async function loadSnippets() {
         const deleteButton = createDeleteButton(snippet);
         link.appendChild(deleteButton);
 
-        snippetContainerElement.appendChild(link);
+        snippetContainerElement.insertBefore(link, snippetContainerElement.firstChild);
     });
 
     if (snippets.length > 0) {
