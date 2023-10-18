@@ -32,31 +32,64 @@ function loadSnippet(snippet) {
         checkbox.checked = isChecked;
     });
 
+    snippetCode.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+    checkbox.style.width = '12px';
+    checkbox.style.height = '12px';
+  });
+  
   appendToFindSnippet(detachedSnippetUrl);
   configureSnippetUrl(snippetUrl, tempUrl);
-
-  Prism.highlightAll();
 }
 
 document.getElementById('smallFont').addEventListener('click', function() {
   const snippetCode = document.getElementById('snippetCode');
   snippetCode.style.fontSize = '12px';
-  snippetCode.style.width = '350px';  // Adjust the width of the snippetCode
-  document.body.style.width = '420px'; 
+  snippetCode.style.width = '350px';
+  document.body.style.width = '420px';
+
+  // Adjust checkbox size
+  const checkboxes = snippetCode.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(checkbox => {
+    checkbox.style.width = '12px';
+    checkbox.style.height = '12px';
+    if (checkbox.checked) {
+      checkbox.style.fontSize = '10px'; // Adjust checkmark size for small font
+    }
+  });
 });
 
 document.getElementById('mediumFont').addEventListener('click', function() {
   const snippetCode = document.getElementById('snippetCode');
   snippetCode.style.fontSize = '18px';
-  snippetCode.style.width = '515px';  // Adjust the width of the snippetCode
-  document.body.style.width = '610px'; 
+  snippetCode.style.width = '515px';
+  document.body.style.width = '610px';
+
+  // Adjust checkbox size
+  const checkboxes = snippetCode.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(checkbox => {
+    checkbox.style.width = '18px';
+    checkbox.style.height = '18px';
+    if (checkbox.checked) {
+      checkbox.style.fontSize = '15px'; // Adjust checkmark size for medium font
+    }
+  });
 });
 
 document.getElementById('largeFont').addEventListener('click', function() {
   const snippetCode = document.getElementById('snippetCode');
   snippetCode.style.fontSize = '24px';
-  snippetCode.style.width = '690px';  // Adjust the width of the snippetCode
-  document.body.style.width = '770px'; 
+  snippetCode.style.width = '690px';
+  document.body.style.width = '770px';
+
+  // Adjust checkbox size
+  const checkboxes = snippetCode.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(checkbox => {
+    checkbox.style.width = '24px';
+    checkbox.style.height = '24px';
+    if (checkbox.checked) {
+      checkbox.style.fontSize = '20px'; // Adjust checkmark size for large font
+    }
+  });
 });
 
 document.getElementById('backButton').addEventListener('click', function() {
@@ -248,11 +281,11 @@ function handleCheckboxChange(checkbox) {
       this.setAttribute('data-checked', this.checked ? 'true' : 'false');
 
       // Save the snippet immediately
-      saveCurrentSnippetState();
+      saveCurrentSnippetState(checkbox);
   });
 }
 
-function saveCurrentSnippetState() {
+function saveCurrentSnippetState(checkbox) {
   console.log('Checkbox saved');
   const snippetCode = document.getElementById('snippetCode');
   let updatedSnippetCode = convertAnchorsToUrls(snippetCode.innerHTML);
@@ -279,6 +312,6 @@ function saveCurrentSnippetState() {
 document.getElementById('snippetCode').addEventListener('change', function(event) {
   if (event.target.type === 'checkbox') {
       event.target.setAttribute('data-checked', event.target.checked ? 'true' : 'false');
-      saveCurrentSnippetState();
+      saveCurrentSnippetState(event.target);
   }
 });
