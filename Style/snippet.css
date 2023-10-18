@@ -142,7 +142,7 @@ input[type="checkbox"]:checked {
 input[type="checkbox"]:checked::after {
     content: '\2713';
     color: #ffffff; /* Blue color for the tick */
-    font-size: 12px; /* Adjust to fit the checkbox */
+    font-size: 10px; /* Adjust to fit the checkbox */
     position: absolute;
     top: 50%;
     left: 50%;

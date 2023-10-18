@@ -141,6 +141,13 @@ document.getElementById('copyButton').addEventListener('click', function() {
 document.getElementById('boldButton').addEventListener('click', function() {
   const selection = window.getSelection();
   const range = selection.getRangeAt(0);
+
+  // Check if the selection contains a checkbox
+  if (range && range.commonAncestorContainer.querySelector && range.commonAncestorContainer.querySelector('input[type="checkbox"]')) {
+      // If a checkbox is part of the selection, do nothing
+      return;
+  }
+
   const parentElement = range.commonAncestorContainer.parentElement;
 
   if (parentElement && parentElement.tagName === 'B') {
