@@ -26,8 +26,16 @@ function loadSnippet(snippet) {
   setSnippetName(snippet.name);
   setSnippetCode(snippet.code);
 
+  const snippetCode = document.getElementById('snippetCode');
+    snippetCode.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        const isChecked = checkbox.getAttribute('data-checked') === 'true';
+        checkbox.checked = isChecked;
+    });
+
   appendToFindSnippet(detachedSnippetUrl);
   configureSnippetUrl(snippetUrl, tempUrl);
+
+  Prism.highlightAll();
 }
 
 document.getElementById('smallFont').addEventListener('click', function() {
@@ -82,6 +90,7 @@ document.getElementById('editButton').addEventListener('click', function() {
 
   document.getElementById('saveButton').style.display = "block";
   document.getElementById('boldButton').style.visibility = "visible";
+  document.getElementById('checkboxButton').style.visibility = "visible";
 });
 
 document.getElementById('copyButton').addEventListener('click', function() {
@@ -94,38 +103,6 @@ document.getElementById('copyButton').addEventListener('click', function() {
   .catch(err => {
       console.error('Could not copy snippet: ', err);
   });
-});
-
-document.getElementById('saveButton').addEventListener('click', function() {
-  const snippetCode = document.getElementById('snippetCode');
-  snippetCode.contentEditable = "false";
-
-  let updatedSnippetCode = convertAnchorsToUrls(snippetCode.innerHTML);
-  updatedSnippetCode = updatedSnippetCode.replace('data-unique="bottom-url"', '');
-
-  const snippetUrlElement = document.getElementById('snippetUrl');
-  let currentUrl = snippetUrlElement.textContent.trim() !== "" ? snippetUrlElement.href : "";
-
-  snippet.url = currentUrl;
-
-  const snippetUrl = document.getElementById('snippetUrl');
-  snippetUrl.contentEditable = "false";
-
-  const index = snippets.findIndex(s => s.name === snippet.name);
-  if (index !== -1) {
-    snippets[index].code = updatedSnippetCode;
-    snippets[index].url = currentUrl;
-  }
-
-  saveSnippets(snippets).then(() => {
-    console.log('Snippet saved');
-  }).catch(err => {
-    console.error('Error saving snippet: ', err);
-  });
-
-  this.style.display = "none";
-  document.getElementById('newAddUrlButton').style.visibility = "hidden";
-  document.getElementById('boldButton').style.visibility = "hidden";
 });
 
 document.getElementById('boldButton').addEventListener('click', function() {
@@ -146,6 +123,73 @@ document.getElementById('boldButton').addEventListener('click', function() {
   }
 
   selection.removeAllRanges();
+});
+
+document.getElementById('checkboxButton').addEventListener('click', function() {
+  const snippetCode = document.getElementById('snippetCode'); // Assuming this is the contenteditable element
+  const selection = window.getSelection();
+
+  if (selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+
+      // Create a checkbox input element
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.id = 'checkbox' + Date.now();
+
+      console.log("Checkbox created id: ", checkbox.id); // Debugging line
+      const label = document.createElement('label');
+      label.htmlFor = checkbox.id;
+
+      // Attach the change handler to the checkbox
+      handleCheckboxChange(checkbox);
+
+      // Insert the checkbox at the current selection
+      range.deleteContents();
+      range.insertNode(checkbox);
+      range.insertNode(label);
+
+      console.log("Checkbox inserted"); // Debugging line
+
+      // Move the cursor to after the inserted checkbox
+      range.setStartAfter(checkbox);
+      range.setEndAfter(checkbox);
+      selection.removeAllRanges();
+      selection.addRange(range);
+  }
+});
+
+document.getElementById('saveButton').addEventListener('click', function() {
+  const snippetCode = document.getElementById('snippetCode');
+  snippetCode.contentEditable = "false";
+
+  let updatedSnippetCode = convertAnchorsToUrls(snippetCode.innerHTML);
+  updatedSnippetCode = updatedSnippetCode.replace('data-unique="bottom-url"', '');
+
+  const snippetUrlElement = document.getElementById('snippetUrl');
+  let currentUrl = snippetUrlElement.textContent.trim() !== "" ? snippetUrlElement.href : "";
+
+  snippet.url = currentUrl;
+
+  const snippetUrl = document.getElementById('snippetUrl');
+  snippetUrl.contentEditable = "false";
+
+  const index = snippets.findIndex(s => s.name === snippet.name);
+  if (index !== -1) {
+      snippets[index].code = updatedSnippetCode;
+      snippets[index].url = currentUrl;
+  }
+
+  saveSnippets(snippets).then(() => {
+      console.log('Snippet saved');
+  }).catch(err => {
+      console.error('Error saving snippet: ', err);
+  });
+
+  this.style.display = "none";
+  document.getElementById('newAddUrlButton').style.visibility = "hidden";
+  document.getElementById('boldButton').style.visibility = "hidden";
+  document.getElementById('checkboxButton').style.visibility = "hidden";
 });
 
 // Helper functions
@@ -196,3 +240,45 @@ function appendToFindSnippet(element) {
   findSnippetElement.appendChild(element);
   findSnippetElement.style.display = 'block';
 }
+
+function handleCheckboxChange(checkbox) {
+  checkbox.addEventListener('change', function() {
+    console.log('handle checkbox change');
+      // Update the data-checked attribute
+      this.setAttribute('data-checked', this.checked ? 'true' : 'false');
+
+      // Save the snippet immediately
+      saveCurrentSnippetState();
+  });
+}
+
+function saveCurrentSnippetState() {
+  console.log('Checkbox saved');
+  const snippetCode = document.getElementById('snippetCode');
+  let updatedSnippetCode = convertAnchorsToUrls(snippetCode.innerHTML);
+  updatedSnippetCode = updatedSnippetCode.replace('data-unique="bottom-url"', '');
+
+  const snippetUrlElement = document.getElementById('snippetUrl');
+  let currentUrl = snippetUrlElement.textContent.trim() !== "" ? snippetUrlElement.href : "";
+
+  snippet.url = currentUrl;
+
+  const index = snippets.findIndex(s => s.name === snippet.name);
+  if (index !== -1) {
+      snippets[index].code = updatedSnippetCode;
+      snippets[index].url = currentUrl;
+  }
+
+  saveSnippets(snippets).then(() => {
+      console.log('Checkbox saved');
+  }).catch(err => {
+      console.error('Error saving Checkbox: ', err);
+  });
+}
+
+document.getElementById('snippetCode').addEventListener('change', function(event) {
+  if (event.target.type === 'checkbox') {
+      event.target.setAttribute('data-checked', event.target.checked ? 'true' : 'false');
+      saveCurrentSnippetState();
+  }
+});
