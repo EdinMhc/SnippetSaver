@@ -9,11 +9,6 @@ let snippets = [];
 let snippetsLoaded = false;
 let activeSnippet = null;
 
-snippetNameElement.addEventListener('input', function() {
-    this.classList.remove('input-error');
-    errorMessageElement.textContent = '';
-});
-
 saveSnippetElement.addEventListener('click', saveSnippet);
 loadSnippetsElement.addEventListener('click', toggleSnippetsVisibility);
 
@@ -360,5 +355,11 @@ function handleEditButtonClick(event, snippet) {
 }
 
 document.addEventListener('DOMContentLoaded', async (event) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const loadSnippetsFlag = urlParams.get('loadSnippets');
+    if (loadSnippetsFlag === 'true'){
+        loadSnippets();
+    }
+
     snippets = await getSnippets();
 });

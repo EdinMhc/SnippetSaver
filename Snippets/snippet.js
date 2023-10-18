@@ -93,7 +93,7 @@ document.getElementById('largeFont').addEventListener('click', function() {
 });
 
 document.getElementById('backButton').addEventListener('click', function() {
-  window.history.back();
+  window.location.href = '../popup.html?loadSnippets=true';
 });
 
 document.getElementById('newAddUrlButton').addEventListener('click', function() {
