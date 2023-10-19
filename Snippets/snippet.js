@@ -36,7 +36,7 @@ function loadSnippet(snippet) {
     checkbox.style.width = '12px';
     checkbox.style.height = '12px';
   });
-  
+
   appendToFindSnippet(detachedSnippetUrl);
   configureSnippetUrl(snippetUrl, tempUrl);
 }
@@ -56,6 +56,17 @@ document.getElementById('smallFont').addEventListener('click', function() {
       checkbox.style.fontSize = '10px'; // Adjust checkmark size for small font
     }
   });
+
+  const toolbarButtons = document.querySelectorAll('#toolBar button');
+    toolbarButtons.forEach(button => {
+        button.style.width = '20px';  // Adjust as needed
+        button.style.height = '20px'; // Adjust as needed
+        button.style.fontSize = '12px';
+        const icon = button.querySelector('i');
+        if (icon) {
+            icon.style.fontSize = '15px'; // Adjust as needed
+        }
+    });
 });
 
 document.getElementById('mediumFont').addEventListener('click', function() {
@@ -73,6 +84,21 @@ document.getElementById('mediumFont').addEventListener('click', function() {
       checkbox.style.fontSize = '15px'; // Adjust checkmark size for medium font
     }
   });
+
+  // Adjust toolbar size
+  const toolbarButtons = document.querySelectorAll('#toolBar button');
+    toolbarButtons.forEach(button => {
+        button.style.width = '25px';
+        button.style.height = '25px';
+        button.style.fontSize = '16px';
+        const icon = button.querySelector('i');
+        if (icon) {
+            icon.style.fontSize = '15px';
+        }
+    });
+
+  const checkboxTool = document.querySelector('.material-icons.checkbox-icon');
+  checkboxTool.style.fontSize = '18px';
 });
 
 document.getElementById('largeFont').addEventListener('click', function() {
@@ -90,6 +116,21 @@ document.getElementById('largeFont').addEventListener('click', function() {
       checkbox.style.fontSize = '20px'; // Adjust checkmark size for large font
     }
   });
+
+  // Adjust toolbar size
+  const toolbarButtons = document.querySelectorAll('#toolBar button');
+    toolbarButtons.forEach(button => {
+        button.style.width = '30px';
+        button.style.height = '30px';
+        button.style.fontSize = '20px';
+        const icon = button.querySelector('i');
+        if (icon) {
+            icon.style.fontSize = '18px';
+        }
+    });
+
+  const checkboxTool = document.querySelector('.material-icons.checkbox-icon');
+  checkboxTool.style.fontSize = '20px';
 });
 
 document.getElementById('backButton').addEventListener('click', function() {

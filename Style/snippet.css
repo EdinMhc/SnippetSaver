@@ -149,3 +149,7 @@ input[type="checkbox"]:checked::after {
     transform: translate(-50%, -50%);
     font-weight: bold;
 }
+
+.material-icons.checkbox-icon {
+    font-size: 16px;
+}
