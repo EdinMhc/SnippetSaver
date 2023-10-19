@@ -19,24 +19,14 @@ chrome.storage.local.get({ snippets: [] }, function(result) {
 
 function loadSnippet(snippet) {
   let snippetUrl = document.getElementById('snippetUrl');
+  const snippetCode = document.getElementById('snippetCode');
   let tempUrl = snippet.url;
 
   let detachedSnippetUrl = detachElement(snippetUrl);
 
   setSnippetName(snippet.name);
   setSnippetCode(snippet.code);
-
-  const snippetCode = document.getElementById('snippetCode');
-    snippetCode.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-        const isChecked = checkbox.getAttribute('data-checked') === 'true';
-        checkbox.checked = isChecked;
-    });
-
-    snippetCode.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-    checkbox.style.width = '12px';
-    checkbox.style.height = '12px';
-  });
-
+  loadCheckBoxes(snippetCode);
   appendToFindSnippet(detachedSnippetUrl);
   configureSnippetUrl(snippetUrl, tempUrl);
 }
@@ -145,7 +135,7 @@ document.getElementById('newAddUrlButton').addEventListener('click', function() 
   if (newUrl !== null && newUrl.trim() !== "") {
       snippetUrl.href = newUrl;
       snippetUrl.textContent = newUrl;
-      this.style.display = "none";  // Hide the button after adding the URL
+      this.style.visibility = "hidden";  // Hide the button after adding the URL
   }
 });
 
@@ -154,13 +144,17 @@ document.getElementById('editButton').addEventListener('click', function() {
   snippetCode.contentEditable = "true";
 
   const snippetUrl = document.getElementById('snippetUrl');
-  snippetUrl.contentEditable = "true";
-  
+  if (snippetUrl.textContent !== ""){
+    snippetUrl.contentEditable = "true";
+    snippetUrl.textContent = snippet.url;
+  }
+
+  const newAddUrlButton = document.getElementById('newAddUrlButton');
   if (snippetUrl.href.includes('null') || snippetUrl.href.trim() === "" || snippetUrl.textContent.includes('null') || snippetUrl.textContent.trim() === "") {
-    document.getElementById('newAddUrlButton').style.visibility = "visible";  // Show the button
-} else {
-    document.getElementById('newAddUrlButton').style.visibility = "hidden";  // Hide the button
-}
+    newAddUrlButton.style.visibility = "visible";
+  } else {
+    newAddUrlButton.style.visibility = "hidden";
+  }
 
   document.getElementById('saveButton').style.display = "block";
   document.getElementById('boldButton').style.visibility = "visible";
@@ -247,13 +241,17 @@ document.getElementById('saveButton').addEventListener('click', function() {
   let updatedSnippetCode = convertAnchorsToUrls(snippetCode.innerHTML);
   updatedSnippetCode = updatedSnippetCode.replace('data-unique="bottom-url"', '');
 
-  const snippetUrlElement = document.getElementById('snippetUrl');
-  let currentUrl = snippetUrlElement.textContent.trim() !== "" ? snippetUrlElement.href : "";
-
+  const snippetUrl = document.getElementById('snippetUrl');
+  let currentUrl = snippetUrl.textContent.trim() === "" ? "" : snippetUrl.textContent;
   snippet.url = currentUrl;
 
-  const snippetUrl = document.getElementById('snippetUrl');
   snippetUrl.contentEditable = "false";
+
+  if (snippet.url !== "") {
+    snippetUrl.textContent = "Find it here!";
+  } else {
+      snippetUrl.textContent = "";
+  }
 
   const index = snippets.findIndex(s => s.name === snippet.name);
   if (index !== -1) {
@@ -306,9 +304,17 @@ function setSnippetCode(code) {
 }
 
 function configureSnippetUrl(snippetUrl, url) {
+  if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+      url = 'http://' + url;
+  }
   snippetUrl.href = url;
   snippetUrl.target = "_blank";
-  snippetUrl.textContent = url;
+  if (url === ""){
+      snippetUrl.textContent = "";
+  }
+  else{
+      snippetUrl.textContent = "Find it here!";
+  }
   snippetUrl.setAttribute('data-unique', 'bottom-url');
 }
 
@@ -355,6 +361,18 @@ function saveCurrentSnippetState(checkbox) {
   }).catch(err => {
       console.error('Error saving Checkbox: ', err);
   });
+}
+
+function loadCheckBoxes(snippetCode) {
+  snippetCode.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+    const isChecked = checkbox.getAttribute('data-checked') === 'true';
+    checkbox.checked = isChecked;
+});
+
+snippetCode.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+checkbox.style.width = '12px';
+checkbox.style.height = '12px';
+});
 }
 
 document.getElementById('snippetCode').addEventListener('change', function(event) {
