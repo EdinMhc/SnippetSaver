@@ -92,6 +92,7 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 
@@ -152,4 +153,20 @@ input[type="checkbox"]:checked::after {
 
 .material-icons.checkbox-icon {
     font-size: 16px;
+}
+
+[data-tooltip]:hover::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%; /* Position above the icon */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-bottom: 5px; /* Gap between tooltip and icon */
 }
