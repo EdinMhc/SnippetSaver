@@ -98,6 +98,21 @@ async function loadSnippets() {
     snippets.forEach(function(snippet) {
 
         const link = document.createElement('div');
+        link.draggable = true;
+
+        link.addEventListener('dragstart', function(event) {
+            event.dataTransfer.setData('text/plain', snippet.name);
+        });
+
+        link.addEventListener('dragover', function(event) {
+            event.preventDefault(); // Necessary to allow dropping
+        });
+
+        link.addEventListener('drop', function(event) {
+            event.preventDefault();
+            const targetSnippetName = event.dataTransfer.getData('text/plain');
+            reorderSnippets(targetSnippetName, snippet.name);
+        });
 
         const snippetName = enterSnippet(snippet);
         link.appendChild(snippetName);
@@ -121,6 +136,20 @@ async function loadSnippets() {
         deleteAllButton.addEventListener('click', deleteAllSnippets);
         snippetContainerElement.appendChild(deleteAllButton);
         snippetsLoaded = true;
+    }
+}
+
+async function reorderSnippets(draggedName, targetName) {
+    const draggedIndex = snippets.findIndex(snippet => snippet.name === draggedName);
+    const targetIndex = snippets.findIndex(snippet => snippet.name === targetName);
+
+    if (draggedIndex !== targetIndex) {
+        const [draggedSnippet] = snippets.splice(draggedIndex, 1);
+        snippets.splice(targetIndex, 0, draggedSnippet);
+
+        // Assuming saveSnippets is an async function
+        await saveSnippets(snippets); // Save the new order
+        await loadSnippets(); // Reload the snippets
     }
 }
 
