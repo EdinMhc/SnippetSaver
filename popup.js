@@ -404,7 +404,8 @@ async function exportSnippets() {
 
     // Loop through each snippet and add it to the zip file
     snippets.forEach(snippet => {
-        zip.file(snippet.name + ".txt", snippet.code); // Ensure you use the correct property for snippet content
+        let textContent = extractTextFromHTML(snippet.code);
+        zip.file(snippet.name + ".txt", textContent); // Ensure you use the correct property for snippet content
     });
 
     // Generate the zip file and trigger download
@@ -412,4 +413,13 @@ async function exportSnippets() {
        .then(function(content) {
            saveAs(content, "snippets.zip");
        });
+}
+
+function extractTextFromHTML(htmlString) {
+    // Create a temporary DOM element
+    var tempDiv = document.createElement("div");
+    // Set its HTML content
+    tempDiv.innerHTML = htmlString;
+    // Extract and return the text content
+    return tempDiv.textContent || tempDiv.innerText || "";
 }
