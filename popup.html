@@ -3,8 +3,12 @@
 <head>
     <link rel="stylesheet" type="text/css" href="Style/popup.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body>
+    <!-- Add this button to your popup.html -->
+<button id="exportSnippets">Export</button>
     <h1>Save Snippets</h1>
     <input id="snippetName" type="text" placeholder="Snippet name">
     <textarea id="snippetContent" placeholder="Snippet content"></textarea>

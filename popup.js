@@ -391,5 +391,25 @@ document.addEventListener('DOMContentLoaded', async (event) => {
         loadSnippets();
     }
 
+    const exportButton = document.getElementById('exportSnippets');
+    if (exportButton) {
+        exportButton.addEventListener('click', exportSnippets);
+    }
     snippets = await getSnippets();
 });
+
+async function exportSnippets() {
+    let snippets = await getSnippets(); // Retrieve snippets from storage
+    let zip = new JSZip();
+
+    // Loop through each snippet and add it to the zip file
+    snippets.forEach(snippet => {
+        zip.file(snippet.name + ".txt", snippet.code); // Ensure you use the correct property for snippet content
+    });
+
+    // Generate the zip file and trigger download
+    zip.generateAsync({type:"blob"})
+       .then(function(content) {
+           saveAs(content, "snippets.zip");
+       });
+}
