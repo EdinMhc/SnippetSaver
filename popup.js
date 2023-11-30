@@ -236,6 +236,7 @@ function toggleSnippetEditMode(container, snippet) {
         container.classList.add('editable');
 
         snippetNameElement.classList.add('disabled-link');
+        container.draggable = false;
 
         container.querySelectorAll('.copy-button, .delete-button, .edit-button').forEach(button => {
             button.style.display = 'none';
@@ -314,7 +315,7 @@ function exitEditMode(container) {
   
     snippetNameElement.contentEditable = false;
     container.classList.remove('editable');
-  
+    container.draggable = true;
     activeSnippet = null;
   }
 
