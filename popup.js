@@ -420,6 +420,14 @@ function handleEditButtonClick(event, snippet) {
     }
 }
 
+document.addEventListener('DOMContentLoaded', async (event) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const loadSnippetsFlag = urlParams.get('loadSnippets');
+    if (loadSnippetsFlag === 'true'){
+        loadSnippets();
+    }
+});
+
 document.getElementById('settings').addEventListener('click', function() {
     window.location.href = '../Settings/settings.html';
 });
