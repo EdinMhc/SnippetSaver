@@ -381,3 +381,23 @@ document.getElementById('snippetCode').addEventListener('change', function(event
       saveCurrentSnippetState(event.target);
   }
 });
+
+document.getElementById('snippetCode').addEventListener('paste', function(event) {
+  // Prevent the default paste action
+  event.preventDefault();
+
+  // Get the text content from the clipboard
+  var text = (event.clipboardData || window.clipboardData).getData('text');
+
+  // Insert the text at the current cursor position
+  if (document.getSelection) {
+      var selection = document.getSelection();
+      if (selection.rangeCount > 0) {
+          var range = selection.getRangeAt(0);
+          range.deleteContents();
+          range.insertNode(document.createTextNode(text));
+      }
+  }
+});
+
+
