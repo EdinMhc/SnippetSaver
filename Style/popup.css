@@ -17,12 +17,12 @@ input[type=text], textarea {
 }
 
 input[type=submit] {
-    width: 100%;
+    flex-grow: 1;
     padding: 14px 20px;
-    margin: 8px 0;
     border: none;
     border-radius: 25px;
     cursor: pointer;
+    margin: 0 4px;
 }
 
     input[type=submit]:hover {
@@ -30,12 +30,12 @@ input[type=submit] {
     }
 
 #saveSnippet {
-    background-color: #ff9800;
+    background-color: #0abd69;
     color: white;
 }
 
     #saveSnippet:hover {
-        background-color: #ff5722;
+        background-color: rgb(7, 158, 88);
     }
 
 #loadSnippets {
@@ -46,6 +46,13 @@ input[type=submit] {
     #loadSnippets:hover {
         background-color: #0d8bf2;
     }
+
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        margin: 8px 0;
+    }
+
 
     #snippetContainer {
         margin-top: 10px;

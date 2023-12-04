@@ -7,14 +7,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body>
-    <!-- Add this button to your popup.html -->
 <button id="exportSnippets">Export</button>
-    <h1>Save Snippets</h1>
-    <input id="snippetName" type="text" placeholder="Snippet name">
-    <textarea id="snippetContent" placeholder="Snippet content"></textarea>
-    <input id="saveSnippet" type="submit" value="Save snippet">
+    <h1>Snippet saver</h1>
+    <input id="snippetName" type="text" placeholder="Name">
+    <textarea id="snippetContent" placeholder="Content"></textarea>
     <p id="errorMessage"></p>
-    <input id="loadSnippets" type="submit" value="Load snippets">
+    <div class="button-container">
+        <input id="saveSnippet" type="submit" value="Save snippet">
+        <input id="loadSnippets" type="submit" value="Load snippets">
+    </div>
     <div id="parentContainer">
         <div id="snippetContainer"></div>
         <button id="deleteAll" style="display: none;" class="delete-button">Delete All</button>
