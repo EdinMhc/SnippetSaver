@@ -105,7 +105,7 @@ async function loadSnippets() {
         });
 
         link.addEventListener('dragover', function(event) {
-            event.preventDefault(); // Necessary to allow dropping
+            event.preventDefault();
         });
 
         link.addEventListener('drop', function(event) {
@@ -116,6 +116,16 @@ async function loadSnippets() {
 
         const snippetName = enterSnippet(snippet);
         link.appendChild(snippetName);
+
+        const favoriteButton = createFavoriteButton(snippet);
+        if (snippet.isFavorite) {
+            favoriteButton.textContent = 'favorite';
+            favoriteButton.classList.add('filled');
+        } else {
+            favoriteButton.textContent = 'favorite_border';
+            favoriteButton.classList.remove('filled');
+        }
+        link.appendChild(favoriteButton);
 
         const editButton = createEditButton(snippet);
         link.appendChild(editButton);
@@ -223,7 +233,52 @@ function createEditButton(snippet) {
   
     return editButton;
 }
-  
+ 
+function createFavoriteButton(snippet) {
+    const favoriteButton = document.createElement('span');
+    favoriteButton.classList.add('favorite-button', 'material-icons');
+    favoriteButton.textContent = 'favorite_border';
+
+    favoriteButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        // Toggle favorite state
+        if (favoriteButton.textContent === 'favorite_border') {
+            favoriteButton.textContent = 'favorite';
+            favoriteButton.classList.add('filled');
+        } else {
+            favoriteButton.textContent = 'favorite_border';
+            favoriteButton.classList.remove('filled');
+        }
+
+        toggleFavoriteStatus(snippet);
+    });
+
+    return favoriteButton;
+}
+
+function toggleFavoriteStatus(snippet) {
+    
+    snippet.isFavorite = !snippet.isFavorite;
+
+    // Needs working, puts the favorited on top
+    if (snippet.isFavorite) {
+        snippets = snippets.filter(s => s.name !== snippet.name);
+        snippets.push(snippet);
+    }
+
+    saveAndReloadSnippets();
+}
+
+function saveAndReloadSnippets() {
+    saveSnippets(snippets).then(() => {
+        console.log('Snippet favorite status updated');
+        loadSnippets();
+    }).catch(err => {
+        console.error('Error updating snippet favorite status: ', err);
+    });
+}
+
+
 function toggleSnippetEditMode(container, snippet) {
     let snippetNameElement = container.querySelector('.snippet-name');
     if (snippetNameElement && !container.classList.contains('editable')) {
@@ -238,7 +293,7 @@ function toggleSnippetEditMode(container, snippet) {
         snippetNameElement.classList.add('disabled-link');
         container.draggable = false;
 
-        container.querySelectorAll('.copy-button, .delete-button, .edit-button').forEach(button => {
+        container.querySelectorAll('.copy-button, .delete-button, .edit-button, .favorite-button').forEach(button => {
             button.style.display = 'none';
         });
 
@@ -295,7 +350,7 @@ function applySnippetNameChange(container, snippet, newName) {
         saveSnippets(snippets);
     }
 
-    container.querySelectorAll('.copy-button, .delete-button, .edit-button').forEach(button => {
+    container.querySelectorAll('.copy-button, .delete-button, .edit-button, .favorite-button').forEach(button => {
         button.style.display = '';
     });
 

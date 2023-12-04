@@ -69,6 +69,7 @@ input[type=submit] {
         box-sizing: border-box;
         overflow: hidden;
         cursor: pointer;
+        border-radius: 15px;
     }
     
     #snippetContainer > div > div {
@@ -158,7 +159,7 @@ input.input-error {
   }
   
 
-.copy-button, .delete-button, .edit-button, .apply-button{
+.copy-button, .delete-button, .edit-button, .apply-button, .favorite-button{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -168,11 +169,11 @@ input.input-error {
     cursor: pointer;
 }
 
-.copy-button:hover, .delete-button:hover, .edit-button:hover, .apply-button {
+.copy-button:hover, .delete-button:hover, .edit-button:hover, .favorite-button:hover, .apply-button {
     background-color: #bdbbbb;
 }
 
-.edit-button.material-icons {
+.edit-button.material-icons, .favorite-button.material-icons {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -218,4 +219,12 @@ input.input-error {
     border: none;
     width: 63px;
     height: 25px;
+}
+
+.favorite-button {
+    cursor: pointer;
+}
+
+.favorite-button.filled {
+    color: black;
 }
