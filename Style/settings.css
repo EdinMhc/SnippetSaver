@@ -1,0 +1,43 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 15px;
+    width: 300px;
+}
+
+#deleteAll, #exportSnippets {
+    background-color: rgb(172, 172, 172);
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    bottom: 10px;
+    right: 10px;
+    border-radius: 12px;
+}
+
+    #deleteAll:hover {
+        background-color: darkred;
+        color: white;
+    }
+
+button {
+    padding: 8px 8px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff9800;
+    color: #fff;
+    cursor: pointer; 
+}
+
+#settingsHeader {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 1em;
+}
+

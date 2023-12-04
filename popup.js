@@ -138,15 +138,6 @@ async function loadSnippets() {
 
         snippetContainerElement.insertBefore(link, snippetContainerElement.firstChild);
     });
-
-    if (snippets.length > 0) {
-        const deleteAllButton = document.createElement('button');
-        deleteAllButton.id = 'deleteAll';
-        deleteAllButton.textContent = 'Delete All';
-        deleteAllButton.addEventListener('click', deleteAllSnippets);
-        snippetContainerElement.appendChild(deleteAllButton);
-        snippetsLoaded = true;
-    }
 }
 
 async function reorderSnippets(draggedName, targetName) {
@@ -185,15 +176,6 @@ async function deleteSnippet(snippetName) {
     snippets = snippets.filter(snippet => snippet.name !== snippetName);
     await saveSnippets(snippets);
     loadSnippets();
-}
-
-async function deleteAllSnippets() {
-    let confirmation = confirm("Are you sure you want to delete all snippets?");
-    if (confirmation) {
-        snippets = [];
-        await saveSnippets(snippets);
-        snippetContainerElement.innerHTML = '';
-    } else {}
 }
 
 async function toggleSnippetsVisibility() {
@@ -277,7 +259,6 @@ function saveAndReloadSnippets() {
         console.error('Error updating snippet favorite status: ', err);
     });
 }
-
 
 function toggleSnippetEditMode(container, snippet) {
     let snippetNameElement = container.querySelector('.snippet-name');
@@ -439,42 +420,6 @@ function handleEditButtonClick(event, snippet) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', async (event) => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const loadSnippetsFlag = urlParams.get('loadSnippets');
-    if (loadSnippetsFlag === 'true'){
-        loadSnippets();
-    }
-
-    const exportButton = document.getElementById('exportSnippets');
-    if (exportButton) {
-        exportButton.addEventListener('click', exportSnippets);
-    }
-    snippets = await getSnippets();
+document.getElementById('settings').addEventListener('click', function() {
+    window.location.href = '../Settings/settings.html';
 });
-
-async function exportSnippets() {
-    let snippets = await getSnippets(); // Retrieve snippets from storage
-    let zip = new JSZip();
-
-    // Loop through each snippet and add it to the zip file
-    snippets.forEach(snippet => {
-        let textContent = extractTextFromHTML(snippet.code);
-        zip.file(snippet.name + ".txt", textContent); // Ensure you use the correct property for snippet content
-    });
-
-    // Generate the zip file and trigger download
-    zip.generateAsync({type:"blob"})
-       .then(function(content) {
-           saveAs(content, "snippets.zip");
-       });
-}
-
-function extractTextFromHTML(htmlString) {
-    // Create a temporary DOM element
-    var tempDiv = document.createElement("div");
-    // Set its HTML content
-    tempDiv.innerHTML = htmlString;
-    // Extract and return the text content
-    return tempDiv.textContent || tempDiv.innerText || "";
-}
