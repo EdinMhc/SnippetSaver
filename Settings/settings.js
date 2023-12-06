@@ -36,27 +36,35 @@ async function deleteAllSnippets(){
 }
 
 async function exportSnippets() {
-    let snippets = await getSnippets(); // Retrieve snippets from storage
+    let snippets = await getSnippets();
     let zip = new JSZip();
 
-    // Loop through each snippet and add it to the zip file
     snippets.forEach(snippet => {
         let textContent = extractTextFromHTML(snippet.code);
-        zip.file(snippet.name + ".txt", textContent); // Ensure you use the correct property for snippet content
+        zip.file(snippet.name + ".txt", textContent);
     });
 
-    // Generate the zip file and trigger download
     zip.generateAsync({type:"blob"})
        .then(function(content) {
-           saveAs(content, "snippets.zip");
+        const dateTimeString = getCurrentDateTimeString();
+       saveAs(content, `snippets${dateTimeString}.zip`);
        });
 }
 
 function extractTextFromHTML(htmlString) {
-    // Create a temporary DOM element
     var tempDiv = document.createElement("div");
-    // Set its HTML content
     tempDiv.innerHTML = htmlString;
-    // Extract and return the text content
     return tempDiv.textContent || tempDiv.innerText || "";
+}
+
+function getCurrentDateTimeString() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    return `${minutes}${hours}${day}${month}${year}`;
 }
