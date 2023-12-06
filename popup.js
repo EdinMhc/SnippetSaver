@@ -60,7 +60,7 @@ async function saveSnippet() {
         return;
     }
     
-    let url = tabs[0].url;
+    let url = tabs.url;
     let snippet = { name: snippetName, code: snippetCode, url: url };
     snippets.push(snippet);
 
@@ -79,11 +79,14 @@ async function saveSnippet() {
 
 function promisifyQuery(queryOptions) {
     return new Promise((resolve, reject) => {
-        chrome.tabs.query(queryOptions, (result) => {
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             if (chrome.runtime.lastError) {
-                return reject(chrome.runtime.lastError);
+                reject(chrome.runtime.lastError.message);
+            } else if (tabs.length === 0) {
+                reject(new Error("No active tab found"));
+            } else {
+                resolve(tabs[0]);
             }
-            return resolve(result);
         });
     });
 }
@@ -137,6 +140,8 @@ async function loadSnippets() {
         link.appendChild(deleteButton);
 
         snippetContainerElement.insertBefore(link, snippetContainerElement.firstChild);
+
+        snippetsLoaded = true;
     });
 }
 
@@ -148,9 +153,8 @@ async function reorderSnippets(draggedName, targetName) {
         const [draggedSnippet] = snippets.splice(draggedIndex, 1);
         snippets.splice(targetIndex, 0, draggedSnippet);
 
-        // Assuming saveSnippets is an async function
-        await saveSnippets(snippets); // Save the new order
-        await loadSnippets(); // Reload the snippets
+        await saveSnippets(snippets);
+        await loadSnippets();
     }
 }
 
@@ -421,6 +425,7 @@ function handleEditButtonClick(event, snippet) {
 }
 
 document.addEventListener('DOMContentLoaded', async (event) => {
+    snippets = await getSnippets();
     const urlParams = new URLSearchParams(window.location.search);
     const loadSnippetsFlag = urlParams.get('loadSnippets');
     if (loadSnippetsFlag === 'true'){
