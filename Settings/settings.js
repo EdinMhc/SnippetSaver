@@ -68,3 +68,19 @@ function getCurrentDateTimeString() {
 
     return `${minutes}${hours}${day}${month}${year}`;
 }
+
+function generateJSONContent(snippets) {
+    return JSON.stringify(snippets, null, 2);
+}
+
+function downloadSnippetsAsJSON(snippets) {
+    const jsonContent = generateJSONContent(snippets);
+    const blob = new Blob([jsonContent], { type: 'application/json' });
+    const dateTimeString = getCurrentDateTimeString();
+    saveAs(blob, `snippets_${dateTimeString}.json`);
+}
+
+document.getElementById('downloadJson').addEventListener('click', async function() {
+    let snippets = await getSnippets();
+    downloadSnippetsAsJSON(snippets);
+});
