@@ -61,8 +61,14 @@ async function saveSnippet() {
     }
     
     let url = tabs.url;
-    let snippet = { name: snippetName, code: snippetCode, url: url };
-    snippets.push(snippet);
+    let snippet = { name: snippetName, code: snippetCode, url: url, isFavorite: false };
+
+    let firstUnfavoritedIndex = snippets.findIndex(s => !s.isFavorite);
+    if (firstUnfavoritedIndex === -1) {
+        snippets.push(snippet);
+    } else {
+        snippets.splice(firstUnfavoritedIndex, 0, snippet);
+    }
 
     await saveSnippets(snippets);
 
@@ -93,6 +99,11 @@ function promisifyQuery(queryOptions) {
 
 async function loadSnippets() {
     snippets = await getSnippets();
+
+    snippets.sort((a, b) => {
+        if (a.isFavorite === b.isFavorite) return 0;
+        return a.isFavorite ? -1 : 1; 
+    });
 
     while (snippetContainerElement.firstChild) {
         snippetContainerElement.firstChild.remove();
@@ -139,10 +150,9 @@ async function loadSnippets() {
         const deleteButton = createDeleteButton(snippet);
         link.appendChild(deleteButton);
 
-        snippetContainerElement.insertBefore(link, snippetContainerElement.firstChild);
-
-        snippetsLoaded = true;
+        snippetContainerElement.appendChild(link);
     });
+    snippetsLoaded = true;
 }
 
 async function reorderSnippets(draggedName, targetName) {
@@ -251,6 +261,12 @@ function toggleFavoriteStatus(snippet) {
         snippets = snippets.filter(s => s.name !== snippet.name);
         snippets.push(snippet);
     }
+
+    snippets.sort((a, b) => {
+        if (a.isFavorite && !b.isFavorite) return -1;
+        if (!a.isFavorite && b.isFavorite) return 1;
+        return 0; // Keep original order for others
+    });
 
     saveAndReloadSnippets();
 }
