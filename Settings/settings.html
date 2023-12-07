@@ -7,7 +7,13 @@
     <script src="../lib/FileSaver.js/FileSaver.js-master/dist/FileSaver.min.js"></script>
 </head>
 <body>
-    <div class="settings-container">
+    <div class="settings-container" id="settings-container">
+        <div class="theme-switch-container">
+            <div class="theme-switch">
+                <input type="checkbox" id="themeSwitch">
+                <label for="themeSwitch" class="slider"></label>
+            </div>
+        </div>        
         <h1 id="settingsHeader">Settings</h1>
         <div class="button-group">
             <button id="deleteAll">Delete All Snippets</button>

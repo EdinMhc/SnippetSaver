@@ -84,3 +84,27 @@ document.getElementById('downloadJson').addEventListener('click', async function
     let snippets = await getSnippets();
     downloadSnippetsAsJSON(snippets);
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const themeSwitch = document.getElementById('themeSwitch');
+    const currentTheme = localStorage.getItem('theme') || 'light';
+
+    function applyTheme(theme) {
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+            document.body.classList.remove('light-theme');
+        } else {
+            document.body.classList.add('light-theme');
+            document.body.classList.remove('dark-theme');
+        }
+    }
+
+    applyTheme(currentTheme);
+    themeSwitch.checked = (currentTheme === 'dark');
+
+    themeSwitch.addEventListener('change', function() {
+        const newTheme = this.checked ? 'dark' : 'light';
+        applyTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+});
