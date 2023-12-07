@@ -2,42 +2,73 @@ body {
     font-family: Arial, sans-serif;
     padding: 15px;
     width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 92vh;
+    margin: 0;
 }
 
-#deleteAll, #exportSnippets {
-    background-color: rgb(172, 172, 172);
-    color: white;
-    border: none;
-    padding: 4px 8px;
+.settings-container {
+    background-color: #f3f3f3;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 10px;
-    margin: 4px 2px;
-    transition-duration: 0.4s;
-    cursor: pointer;
-    bottom: 10px;
-    right: 10px;
-    border-radius: 12px;
 }
 
-    #deleteAll:hover {
-        background-color: darkred;
-        color: white;
-    }
+.setting-item {
+    margin-bottom: 20px;
+}
 
-button {
-    padding: 8px 8px;
-    border: none;
-    border-radius: 5px;
-    background-color: #ff9800;
-    color: #fff;
-    cursor: pointer; 
+.setting-item label {
+    margin-right: 10px;
 }
 
 #settingsHeader {
-    text-align: center;
-    width: 100%;
-    margin-bottom: 1em;
+    margin-bottom: 30px;
+    color: #333;
 }
 
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: #fff;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.back-button {
+    background-color: #f44336;
+}
+
+.back-button:hover {
+    background-color: #d32f2f;
+}
+
+.button-group {
+    margin-bottom: 20px;
+}
+
+#deleteAll {
+    background-color: #c01f19;
+}
+
+#deleteAll:hover {
+    background-color: #971915;
+}
+
+#exportSnippets, #downloadJson {
+    background-color: #0da727;
+}
+
+#exportSnippets:hover, #downloadJson:hover {
+    background-color: rgb(29, 156, 13);
+}

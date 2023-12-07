@@ -7,19 +7,15 @@
     <script src="../lib/FileSaver.js/FileSaver.js-master/dist/FileSaver.min.js"></script>
 </head>
 <body>
-    <button id="backToMain">Back to Main</button>
-    <h1 id="settingsHeader">Settings</h1>
-    <div>
-        <label for="windowSize">Window Size:</label>
-        <select id="windowSize">
-            <option value="small">Small</option>
-            <option value="medium">Medium</option>
-            <option value="large">Large</option>
-        </select>
+    <div class="settings-container">
+        <h1 id="settingsHeader">Settings</h1>
+        <div class="button-group">
+            <button id="deleteAll">Delete All Snippets</button>
+            <button id="exportSnippets">Export Snippets</button>
+            <button id="downloadJson">Download as JSON</button>
+        </div>
+        <button id="backToMain" class="back-button">Back</button>
     </div>
-        <button id="deleteAll">Delete All Snippets</button>
-        <button id="exportSnippets">Export Snippets</button>
-        <button id="downloadJson" data-tooltip="You can store your snippets more safelly in the json file and allow for import">Download Snippets as JSON</button>
     <script src="settings.js"></script>
 </body>
 </html>
