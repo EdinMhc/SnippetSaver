@@ -216,3 +216,39 @@ input.input-error {
 .favorite-button.filled {
     color: black;
 }
+
+/* Light mode */
+.light-theme {
+    background-color: #f3f3f3;
+    color: #444444;
+}
+
+/* Dark mode */
+.dark-theme {
+    background-color: #333;
+    color: #444444;
+}
+
+.dark-theme #header {
+    color: #ffffff;
+}
+
+.dark-theme #snippetName{
+    background-color: #4d4d4d;
+    border: #4b4949;
+}
+
+.dark-theme #snippetContent{
+    background-color: #4d4d4d;
+    border: #4b4949;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #ffffff;
+    opacity: 1;
+}
+
+.dark-theme #snippetContainer > div{
+    background-color: #868484;
+    color: black;
+}

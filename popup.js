@@ -442,12 +442,24 @@ function handleEditButtonClick(event, snippet) {
 
 document.addEventListener('DOMContentLoaded', async (event) => {
     snippets = await getSnippets();
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    applyTheme(currentTheme);
+
+    function applyTheme(theme) {
+    if (theme === 'dark') {
+        document.body.classList.add('dark-theme');
+        document.body.classList.remove('light-theme');
+    } else {
+        document.body.classList.add('light-theme');
+        document.body.classList.remove('dark-theme');
+    }
+
     const urlParams = new URLSearchParams(window.location.search);
     const loadSnippetsFlag = urlParams.get('loadSnippets');
     if (loadSnippetsFlag === 'true'){
         loadSnippets();
     }
-});
+}});
 
 document.getElementById('settings').addEventListener('click', function() {
     window.location.href = '../Settings/settings.html';
