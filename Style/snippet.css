@@ -51,13 +51,13 @@ button {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #ff9800;
+    background-color: #f44336;
     color: #fff;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #ee8f01;
+    background-color: #d32f2f;
 }
 
 #saveButton {
@@ -86,7 +86,7 @@ a:hover {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #017483;
+    background-color: #f44336;
     height: 20px;
     width: 20px;
     display: flex;
@@ -97,7 +97,7 @@ a:hover {
 
 
 #toolBar button:hover {
-    background-color: #01616e;
+    background-color: #d32f2f;
 }
 
 #copyButton i {
@@ -123,27 +123,27 @@ a:hover {
 }
 
 input[type="checkbox"] {
-    appearance: none; /* Remove default appearance */
+    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    width: 12px; /* Adjust to desired size */
+    width: 12px;
     height: 12px;
-    border: 1px solid #333; /* Black border */
-    background-color: #ffffff; /* White background */
-    border-radius: 3px; /* Slight rounding to edges */
+    border: 1px solid #333;
+    background-color: #ffffff;
+    border-radius: 3px;
     vertical-align: middle;
-    cursor: pointer; /* Hand cursor on hover */
+    cursor: pointer;
     position: relative;
 }
 
 input[type="checkbox"]:checked {
-    background-color: #017483; /* Blueish background when checked */
+    background-color: #017483;
 }
 
 input[type="checkbox"]:checked::after {
     content: '\2713';
-    color: #ffffff; /* White color for the tick */
-    font-size: 10px; /* Adjust to fit the checkbox */
+    color: #ffffff;
+    font-size: 10px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -158,7 +158,7 @@ input[type="checkbox"]:checked::after {
 [data-tooltip]:hover::before {
     content: attr(data-tooltip);
     position: absolute;
-    bottom: 100%; /* Position above the icon */
+    bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
     background-color: #333;
@@ -168,5 +168,38 @@ input[type="checkbox"]:checked::after {
     font-size: 12px;
     white-space: nowrap;
     z-index: 1000;
-    margin-bottom: 5px; /* Gap between tooltip and icon */
+    margin-bottom: 5px;
+}
+
+/* light theme */
+.light-theme {
+    background-color: #f3f3f3;
+    color: #333;
+}
+
+/* dark theme */
+.dark-theme {
+    background-color: #333;
+    color: #f3f3f3;
+}
+
+.dark-theme #snippetName {
+    color: #ffffff;
+}
+
+.dark-theme #snippetBox{
+    background-color: #454545;
+    border-color: black;
+}
+
+.dark-theme #snippetCode{
+    color: black;
+}
+
+.dark-theme #toolBar button{
+    background-color: #8c8c8c;
+}
+
+.dark-theme #toolBar button:hover{
+    background-color: #9c9c9c;
 }

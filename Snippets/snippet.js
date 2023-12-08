@@ -400,4 +400,17 @@ document.getElementById('snippetCode').addEventListener('paste', function(event)
   }
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+  const currentTheme = localStorage.getItem('theme') || 'light';
+  applyTheme(currentTheme);
+});
 
+function applyTheme(theme) {
+  if (theme === 'dark') {
+      document.body.classList.add('dark-theme');
+      document.body.classList.remove('light-theme');
+  } else {
+      document.body.classList.add('light-theme');
+      document.body.classList.remove('dark-theme');
+  }
+}

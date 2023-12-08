@@ -243,12 +243,20 @@ input.input-error {
     border: #4b4949;
 }
 
-input::placeholder, textarea::placeholder {
-    color: #ffffff;
-    opacity: 1;
-}
-
 .dark-theme #snippetContainer > div{
     background-color: #868484;
     color: black;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #909090;
+    opacity: 1;
+}
+
+.dark-theme input::placeholder, .dark-theme textarea::placeholder {
+    color: #bfbfbf;
+}
+
+.light-theme input::placeholder, .light-theme textarea::placeholder {
+    color: #606060;
 }
