@@ -234,19 +234,25 @@ input.input-error {
 }
 
 .dark-theme #snippetName{
-    background-color: #4d4d4d;
+    background-color: #b2b2b2;
     border: #4b4949;
 }
 
 .dark-theme #snippetContent{
-    background-color: #4d4d4d;
+    background-color: #b2b2b2;
     border: #4b4949;
 }
 
 .dark-theme #snippetContainer > div{
-    background-color: #868484;
+    background-color: #b2b2b2;
     color: black;
 }
+
+.dark-theme #snippetContainer > div:hover{
+    background-color: #c0c0c0;
+    color: black;
+}
+
 
 input::placeholder, textarea::placeholder {
     color: #909090;
@@ -254,7 +260,7 @@ input::placeholder, textarea::placeholder {
 }
 
 .dark-theme input::placeholder, .dark-theme textarea::placeholder {
-    color: #bfbfbf;
+    color: #2c2c2c;
 }
 
 .light-theme input::placeholder, .light-theme textarea::placeholder {

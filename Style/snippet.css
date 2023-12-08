@@ -196,10 +196,10 @@ input[type="checkbox"]:checked::after {
     color: black;
 }
 
-.dark-theme #toolBar button{
+/* .dark-theme #toolBar button{
     background-color: #8c8c8c;
 }
 
 .dark-theme #toolBar button:hover{
     background-color: #9c9c9c;
-}
+} */
