@@ -177,7 +177,13 @@ function updateSnippet(oldName, newName) {
 }
 
 function copySnippet(text) {
-    navigator.clipboard.writeText(text)
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = text;
+
+    // Extract the text content from the parsed HTML
+    const textContent = tempDiv.textContent || tempDiv.innerText || "";
+
+    navigator.clipboard.writeText(textContent)
         .then(() => {
             console.log('Snippet copied to clipboard');
         })
