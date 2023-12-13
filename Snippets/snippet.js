@@ -37,26 +37,27 @@ document.getElementById('smallFont').addEventListener('click', function() {
   snippetCode.style.width = '350px';
   document.body.style.width = '420px';
 
-  // Adjust checkbox size
   const checkboxes = snippetCode.querySelectorAll('input[type="checkbox"]');
   checkboxes.forEach(checkbox => {
     checkbox.style.width = '12px';
     checkbox.style.height = '12px';
     if (checkbox.checked) {
-      checkbox.style.fontSize = '10px'; // Adjust checkmark size for small font
+      checkbox.style.fontSize = '10px';
     }
   });
 
   const toolbarButtons = document.querySelectorAll('#toolBar button');
     toolbarButtons.forEach(button => {
-        button.style.width = '20px';  // Adjust as needed
-        button.style.height = '20px'; // Adjust as needed
+        button.style.width = '20px';
+        button.style.height = '20px';
         button.style.fontSize = '12px';
         const icon = button.querySelector('i');
         if (icon) {
-            icon.style.fontSize = '15px'; // Adjust as needed
+            icon.style.fontSize = '15px';
         }
     });
+    const toolBar = document.getElementById('toolBar');
+    toolBar.style.gap = '5px';
 });
 
 document.getElementById('mediumFont').addEventListener('click', function() {
@@ -65,17 +66,15 @@ document.getElementById('mediumFont').addEventListener('click', function() {
   snippetCode.style.width = '515px';
   document.body.style.width = '610px';
 
-  // Adjust checkbox size
   const checkboxes = snippetCode.querySelectorAll('input[type="checkbox"]');
   checkboxes.forEach(checkbox => {
     checkbox.style.width = '18px';
     checkbox.style.height = '18px';
     if (checkbox.checked) {
-      checkbox.style.fontSize = '15px'; // Adjust checkmark size for medium font
+      checkbox.style.fontSize = '15px';
     }
   });
 
-  // Adjust toolbar size
   const toolbarButtons = document.querySelectorAll('#toolBar button');
     toolbarButtons.forEach(button => {
         button.style.width = '25px';
@@ -87,6 +86,9 @@ document.getElementById('mediumFont').addEventListener('click', function() {
         }
     });
 
+    const toolBar = document.getElementById('toolBar');
+    toolBar.style.gap = '7px';
+
   const checkboxTool = document.querySelector('.material-icons.checkbox-icon');
   checkboxTool.style.fontSize = '18px';
 });
@@ -97,17 +99,15 @@ document.getElementById('largeFont').addEventListener('click', function() {
   snippetCode.style.width = '690px';
   document.body.style.width = '770px';
 
-  // Adjust checkbox size
   const checkboxes = snippetCode.querySelectorAll('input[type="checkbox"]');
   checkboxes.forEach(checkbox => {
     checkbox.style.width = '24px';
     checkbox.style.height = '24px';
     if (checkbox.checked) {
-      checkbox.style.fontSize = '20px'; // Adjust checkmark size for large font
+      checkbox.style.fontSize = '20px';
     }
   });
 
-  // Adjust toolbar size
   const toolbarButtons = document.querySelectorAll('#toolBar button');
     toolbarButtons.forEach(button => {
         button.style.width = '30px';
@@ -118,6 +118,9 @@ document.getElementById('largeFont').addEventListener('click', function() {
             icon.style.fontSize = '18px';
         }
     });
+
+    const toolBar = document.getElementById('toolBar');
+    toolBar.style.gap = '10px';
 
   const checkboxTool = document.querySelector('.material-icons.checkbox-icon');
   checkboxTool.style.fontSize = '20px';
@@ -131,11 +134,10 @@ document.getElementById('newAddUrlButton').addEventListener('click', function() 
   const snippetUrl = document.getElementById('snippetUrl');
   const newUrl = prompt("Please enter the URL:");
 
-  // Check if the user clicked "Cancel" or entered an empty URL
   if (newUrl !== null && newUrl.trim() !== "") {
       snippetUrl.href = newUrl;
       snippetUrl.textContent = newUrl;
-      this.style.visibility = "hidden";  // Hide the button after adding the URL
+      this.style.visibility = "hidden";
   }
 });
 
@@ -177,20 +179,16 @@ document.getElementById('boldButton').addEventListener('click', function() {
   const selection = window.getSelection();
   const range = selection.getRangeAt(0);
 
-  // Check if the selection contains a checkbox
   if (range && range.commonAncestorContainer.querySelector && range.commonAncestorContainer.querySelector('input[type="checkbox"]')) {
-      // If a checkbox is part of the selection, do nothing
       return;
   }
 
   const parentElement = range.commonAncestorContainer.parentElement;
 
   if (parentElement && parentElement.tagName === 'B') {
-      // If the selected text is bolded, unbold it
       const unboldedText = document.createTextNode(parentElement.textContent);
       parentElement.replaceWith(unboldedText);
   } else {
-      // If the selected text is not bolded, bold it
       const boldElement = document.createElement('b');
       boldElement.textContent = range.toString();
       range.deleteContents();
@@ -201,32 +199,27 @@ document.getElementById('boldButton').addEventListener('click', function() {
 });
 
 document.getElementById('checkboxButton').addEventListener('click', function() {
-  const snippetCode = document.getElementById('snippetCode'); // Assuming this is the contenteditable element
   const selection = window.getSelection();
 
   if (selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
 
-      // Create a checkbox input element
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
       checkbox.id = 'checkbox' + Date.now();
 
-      console.log("Checkbox created id: ", checkbox.id); // Debugging line
+      console.log("Checkbox created id: ", checkbox.id);
       const label = document.createElement('label');
       label.htmlFor = checkbox.id;
 
-      // Attach the change handler to the checkbox
       handleCheckboxChange(checkbox);
 
-      // Insert the checkbox at the current selection
       range.deleteContents();
       range.insertNode(checkbox);
       range.insertNode(label);
 
-      console.log("Checkbox inserted"); // Debugging line
+      console.log("Checkbox inserted");
 
-      // Move the cursor to after the inserted checkbox
       range.setStartAfter(checkbox);
       range.setEndAfter(checkbox);
       selection.removeAllRanges();
@@ -271,7 +264,6 @@ document.getElementById('saveButton').addEventListener('click', function() {
   document.getElementById('checkboxButton').style.visibility = "hidden";
 });
 
-// Helper functions
 async function saveSnippets(snippets) {
   return new Promise((resolve, reject) => {
     chrome.storage.local.set({ snippets }, () => {
@@ -331,10 +323,8 @@ function appendToFindSnippet(element) {
 function handleCheckboxChange(checkbox) {
   checkbox.addEventListener('change', function() {
     console.log('handle checkbox change');
-      // Update the data-checked attribute
       this.setAttribute('data-checked', this.checked ? 'true' : 'false');
 
-      // Save the snippet immediately
       saveCurrentSnippetState(checkbox);
   });
 }
@@ -383,13 +373,10 @@ document.getElementById('snippetCode').addEventListener('change', function(event
 });
 
 document.getElementById('snippetCode').addEventListener('paste', function(event) {
-  // Prevent the default paste action
   event.preventDefault();
 
-  // Get the text content from the clipboard
   var text = (event.clipboardData || window.clipboardData).getData('text');
 
-  // Insert the text at the current cursor position
   if (document.getSelection) {
       var selection = document.getSelection();
       if (selection.rangeCount > 0) {

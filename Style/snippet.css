@@ -75,9 +75,12 @@ a:hover {
 
 #toolBar {
     display: flex;
-    justify-content: flex-start;
+    top: 1px;
+    position: sticky;
+    justify-content: center;
     gap: 5px;
     margin-bottom: 10px;
+    z-index: 1000;
 }
 
 #toolBar button {
@@ -94,7 +97,6 @@ a:hover {
     justify-content: center;
     position: relative;
 }
-
 
 #toolBar button:hover {
     background-color: #d32f2f;
@@ -195,11 +197,3 @@ input[type="checkbox"]:checked::after {
 .dark-theme #snippetCode{
     color: black;
 }
-
-/* .dark-theme #toolBar button{
-    background-color: #8c8c8c;
-}
-
-.dark-theme #toolBar button:hover{
-    background-color: #9c9c9c;
-} */

@@ -180,7 +180,6 @@ function copySnippet(text) {
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = text;
 
-    // Extract the text content from the parsed HTML
     const textContent = tempDiv.textContent || tempDiv.innerText || "";
 
     navigator.clipboard.writeText(textContent)
