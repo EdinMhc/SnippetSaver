@@ -74,13 +74,21 @@ a:hover {
 }
 
 #toolBar {
-    display: flex;
-    top: 1px;
     position: sticky;
-    justify-content: center;
+    top: 0;
+    display: flex;
+    align-items: flex-start;
     gap: 5px;
-    margin-bottom: 10px;
+    margin-right: 10px;
     z-index: 1000;
+    background-color: #454545;
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#snippetContent {
+    flex-grow: 1;
 }
 
 #toolBar button {
