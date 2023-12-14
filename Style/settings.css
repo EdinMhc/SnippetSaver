@@ -65,12 +65,12 @@ button:hover {
     background-color: #971915;
 }
 
-#exportSnippets, #downloadJson {
+#exportSnippets, #downloadJson, #importButton {
     background-color: #0da727;
 }
 
-#exportSnippets:hover, #downloadJson:hover {
-    background-color: rgb(29, 156, 13);
+#exportSnippets:hover, #downloadJson:hover, #importButton:hover {
+    background-color: rgb(39, 187, 19);
 }
 
 .theme-switch-container {
@@ -129,6 +129,16 @@ input:checked + .slider:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
+}
+
+#jsonFileInput {
+    display: block;
+    margin: 10px 0;
+    padding: 8px 12px;
+    border: 1px solid #a5a5a5;
+    border-radius: 19px;
+    box-sizing: border-box;
+    font-size: 12px;
 }
 
 /* Light Theme Styles */

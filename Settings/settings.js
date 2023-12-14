@@ -108,3 +108,32 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('theme', newTheme);
     });
 });
+
+document.getElementById('importButton').addEventListener('click', async function() {
+    var fileInput = document.getElementById('jsonFileInput');
+    var file = fileInput.files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = async function(e) {
+            var contents = e.target.result;
+            try {
+                var importedSnippets = JSON.parse(contents);
+                var existingSnippets = await getSnippets();
+
+                var uniqueSnippets = importedSnippets.filter(importedSnippet => 
+                    !existingSnippets.some(existingSnippet => existingSnippet.name === importedSnippet.name)
+                );
+
+                var mergedSnippets = [...existingSnippets, ...uniqueSnippets];
+                await saveSnippets(mergedSnippets);
+                alert('Snippets imported successfully!');
+            } catch (error) {
+                console.error('Error parsing JSON:', error);
+                alert('Error importing snippets. Please check the file format.');
+            }
+        };
+        reader.readAsText(file);
+    } else {
+        alert('No file selected');
+    }
+});
