@@ -81,7 +81,7 @@ a:hover {
     gap: 5px;
     margin-right: 10px;
     z-index: 1000;
-    background-color: #454545;
+    background-color: white;
     width: 100%;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -200,4 +200,8 @@ input[type="checkbox"]:checked::after {
 
 .dark-theme #snippetCode{
     color: black;
+}
+
+.dark-theme #toolBar{
+    background-color: #454545
 }
