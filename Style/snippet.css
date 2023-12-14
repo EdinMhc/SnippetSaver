@@ -87,10 +87,6 @@ a:hover {
     padding-bottom: 5px;
 }
 
-#snippetContent {
-    flex-grow: 1;
-}
-
 #toolBar button {
     padding: 5px 10px;
     font-size: 0.9em;
