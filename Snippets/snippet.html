@@ -5,11 +5,11 @@
         <link rel="stylesheet" href="../Style/snippet.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
-    <body>
+    <body style="width: 420px;">
         <div id="snippetBox">
             <button id="backButton">Back</button>
             <h1 id="snippetName"></h1>
-                <div id="toolBar">
+                <div id="toolBar" style="gap: 5px">
                     <button id="smallFont" data-tooltip="Small font">S</button>
                     <button id="mediumFont" data-tooltip="Medium font">M</button>
                     <button id="largeFont" data-tooltip="Large font">L</button>
@@ -19,7 +19,7 @@
                     <button id="checkboxButton" style="visibility: hidden;" data-tooltip="Add Checkbox"><i class="material-icons checkbox-icon">check_box</i></button>
                     <button id="newAddUrlButton" style="visibility: hidden;" data-tooltip="Add URL"><i class="material-icons">add_link</i></button>
                 </div>
-            <pre id="snippetCode"></pre>
+            <pre id="snippetCode" style="font-size: 12px; width: 350px" ></pre>
             <button id="saveButton" style="display: none; margin-left: auto;">Save</button>
             <div id="findSnippet" style="display: block;">
                 <a id="snippetUrl" data-unique="bottom-url"></a>
