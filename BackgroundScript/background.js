@@ -37,10 +37,8 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
 async function createSnippet(selectedText, pageUrl) {
     try {
         let allSnippets = await getSnippets();
-        console.log("Existing snippets:", allSnippets);
 
         let snippetName = `QuickSnippet${allSnippets.length}`;
-        console.log("Snippet name:", snippetName);
 
         let newSnippet = {
             name: snippetName,
@@ -49,7 +47,16 @@ async function createSnippet(selectedText, pageUrl) {
             url: pageUrl
         };
 
-        allSnippets.push(newSnippet);
+        // Find the first index of an unfavorited snippet
+        let firstUnfavoritedIndex = allSnippets.findIndex(s => !s.isFavorite);
+
+        // Insert the new snippet at the correct position
+        if (firstUnfavoritedIndex === -1) {
+            allSnippets.push(newSnippet);
+        } else {
+            allSnippets.splice(firstUnfavoritedIndex, 0, newSnippet);
+        }
+
         await saveSnippets(allSnippets);
 
         console.log("New snippet created:", newSnippet);
