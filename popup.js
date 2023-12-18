@@ -81,6 +81,7 @@ async function saveSnippet() {
     if (snippetsLoaded) {
         loadSnippets();
     }
+    clearPopupState();
 }
 
 function promisifyQuery(queryOptions) {
@@ -446,6 +447,7 @@ function handleEditButtonClick(event, snippet) {
 }
 
 document.addEventListener('DOMContentLoaded', async (event) => {
+    restorePopupState();
     snippets = await getSnippets();
     const currentTheme = localStorage.getItem('theme') || 'light';
     applyTheme(currentTheme);
@@ -469,3 +471,28 @@ document.addEventListener('DOMContentLoaded', async (event) => {
 document.getElementById('settings').addEventListener('click', function() {
     window.location.href = '../Settings/settings.html';
 });
+
+// NEW
+function savePopupState() {
+    let snippetName = document.getElementById('snippetName').value;
+    let snippetContent = document.getElementById('snippetContent').value;
+
+    chrome.storage.local.set({ popupState: { snippetName, snippetContent } });
+}
+
+document.getElementById('snippetName').addEventListener('input', savePopupState);
+document.getElementById('snippetContent').addEventListener('input', savePopupState);
+window.addEventListener('blur', savePopupState);
+
+function restorePopupState() {
+    chrome.storage.local.get('popupState', function(data) {
+        if (data.popupState) {
+            document.getElementById('snippetName').value = data.popupState.snippetName || '';
+            document.getElementById('snippetContent').value = data.popupState.snippetContent || '';
+        }
+    });
+}
+
+function clearPopupState() {
+    chrome.storage.local.remove('popupState');
+}
