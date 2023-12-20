@@ -47,10 +47,8 @@ async function createSnippet(selectedText, pageUrl) {
             url: pageUrl
         };
 
-        // Find the first index of an unfavorited snippet
         let firstUnfavoritedIndex = allSnippets.findIndex(s => !s.isFavorite);
 
-        // Insert the new snippet at the correct position
         if (firstUnfavoritedIndex === -1) {
             allSnippets.push(newSnippet);
         } else {

@@ -3,6 +3,9 @@
   "name": "Quick Code Snippet Saver",
   "version": "1.0",
   "description": "Save and organize code snippets quickly and easily",
+  "icons": {
+    "16": "icons/snippetSaverIcon.png"
+  },
   "permissions": ["activeTab", "storage", "contextMenus"],
   "action": {
     "default_popup": "popup.html"
