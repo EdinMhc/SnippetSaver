@@ -166,3 +166,7 @@ input:checked + .slider:before {
 .dark-theme #settingsHeader {
     color: #ffffff; /* White text color for settings header in dark theme */
 }
+
+.hidden{
+    display: none;
+}

@@ -88,6 +88,16 @@ document.getElementById('downloadJson').addEventListener('click', async function
 document.addEventListener('DOMContentLoaded', function() {
     const themeSwitch = document.getElementById('themeSwitch');
     const currentTheme = localStorage.getItem('theme') || 'light';
+    var fileInput = document.getElementById('jsonFileInput');
+    var importButton = document.getElementById('importButton');
+
+    fileInput.addEventListener('change', function() {
+        if (fileInput.files.length > 0) {
+            importButton.classList.remove('hidden');
+        } else {
+            importButton.classList.add('hidden');
+        }
+    });
 
     function applyTheme(theme) {
         if (theme === 'dark') {
