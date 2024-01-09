@@ -88,8 +88,48 @@ document.getElementById('downloadJson').addEventListener('click', async function
 document.addEventListener('DOMContentLoaded', function() {
     const themeSwitch = document.getElementById('themeSwitch');
     const currentTheme = localStorage.getItem('theme') || 'light';
-    var fileInput = document.getElementById('jsonFileInput');
     var importButton = document.getElementById('importButton');
+    var importIcon = document.getElementById('importIcon');
+
+    var fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.json';
+    fileInput.style.display = 'none';
+    document.body.appendChild(fileInput);
+
+    document.getElementById('importButton').addEventListener('click', async function() {
+        var file = fileInput.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = async function(e) {
+                var contents = e.target.result;
+                try {
+                    var importedSnippets = JSON.parse(contents);
+                    var existingSnippets = await getSnippets();
+
+                    var uniqueSnippets = importedSnippets.filter(importedSnippet => 
+                        !existingSnippets.some(existingSnippet => existingSnippet.name === importedSnippet.name)
+                    );
+
+                    var mergedSnippets = [...existingSnippets, ...uniqueSnippets];
+                    await saveSnippets(mergedSnippets);
+                    alert('Snippets imported successfully!');
+
+                    importButton.classList.add('hidden');
+                } catch (error) {
+                    console.error('Error parsing JSON:', error);
+                    alert('Error importing snippets. Please check the file format.');
+                }
+            };
+            reader.readAsText(file);
+        } else {
+            alert('No file selected');
+        }
+    });
+
+    importIcon.addEventListener('click', function() {
+        fileInput.click();
+    });
 
     fileInput.addEventListener('change', function() {
         if (fileInput.files.length > 0) {
@@ -98,6 +138,8 @@ document.addEventListener('DOMContentLoaded', function() {
             importButton.classList.add('hidden');
         }
     });
+
+
 
     function applyTheme(theme) {
         if (theme === 'dark') {
@@ -117,33 +159,4 @@ document.addEventListener('DOMContentLoaded', function() {
         applyTheme(newTheme);
         localStorage.setItem('theme', newTheme);
     });
-});
-
-document.getElementById('importButton').addEventListener('click', async function() {
-    var fileInput = document.getElementById('jsonFileInput');
-    var file = fileInput.files[0];
-    if (file) {
-        var reader = new FileReader();
-        reader.onload = async function(e) {
-            var contents = e.target.result;
-            try {
-                var importedSnippets = JSON.parse(contents);
-                var existingSnippets = await getSnippets();
-
-                var uniqueSnippets = importedSnippets.filter(importedSnippet => 
-                    !existingSnippets.some(existingSnippet => existingSnippet.name === importedSnippet.name)
-                );
-
-                var mergedSnippets = [...existingSnippets, ...uniqueSnippets];
-                await saveSnippets(mergedSnippets);
-                alert('Snippets imported successfully!');
-            } catch (error) {
-                console.error('Error parsing JSON:', error);
-                alert('Error importing snippets. Please check the file format.');
-            }
-        };
-        reader.readAsText(file);
-    } else {
-        alert('No file selected');
-    }
 });

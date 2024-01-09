@@ -159,14 +159,27 @@ input:checked + .slider:before {
 }
 
 .dark-theme .settings-container {
-    background-color: #454545; /* Adjust the color as needed */
+    background-color: #454545;
     color: #f3f3f3;
 }
 
 .dark-theme #settingsHeader {
-    color: #ffffff; /* White text color for settings header in dark theme */
+    color: #ffffff;
 }
 
-.hidden{
+.hidden {
     display: none;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+}
+
+.import-icon-container {
+    cursor: pointer;
+}
+
+.upload-icon {
+    width: 30px;
+    height: 30px;
+    padding: 10px;
 }
