@@ -193,7 +193,6 @@ input.input-error {
   }
 
 #settings{
-    background-color: #868484;
     color: white;
     position: absolute;
     top: 10px;
@@ -201,13 +200,13 @@ input.input-error {
     border-radius: 5px;
     cursor: pointer;
     border: none;
-    width: 63px;
-    height: 25px;
+    width: 35px;
+    height: auto;
 }
 
-#settings:hover{
-    background-color: #757575;
-}
+/* #settings:hover{
+    background-color: #e5e5e5;
+} */
 
 .favorite-button {
     cursor: pointer;
